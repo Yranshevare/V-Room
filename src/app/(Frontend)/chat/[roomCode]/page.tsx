@@ -82,7 +82,7 @@ export default function ChatRoomPage() {
                 <div className="min-[920px]:!w-full  min-[920px]:mx-auto  px-4 py-3">
                     <div className="flex  items-center justify-between">
                         <div className="flex  items-center gap-4">
-                            <Button variant="ghost" size="sm" onClick={() => router.back()} className="text-muted hover:text-foreground">
+                            <Button variant="ghost" size="sm" onClick={() => router.back()} className="text-muted hover:bg-transparent hover:text-black cursor-pointer ">
                                 <ArrowLeft className="h-4 w-4" />
                             </Button>
                             <div className="flex items-center gap-3">
