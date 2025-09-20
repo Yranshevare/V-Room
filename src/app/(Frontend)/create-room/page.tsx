@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -16,14 +16,17 @@ export default function CreateRoomPage() {
     const [isCreated, setIsCreated] = useState(false);
     const [copied, setCopied] = useState(false);
 
-    const generateRoomCode = () => {
-        return Math.random().toString(36).substring(2, 8).toUpperCase();
-    };
+    useEffect(() => {
+        const code = Math.random().toString(36).substring(2, 8).toUpperCase();
+        if (roomCode.trim() === "") {
+            setRoomCode(code);
+        }
+    }, []);
 
     const handleCreateRoom = () => {
         if (roomName.trim() && userName.trim()) {
-            const code = generateRoomCode();
-            setRoomCode(code);
+            // const code = generateRoomCode();
+            // setRoomCode(code);
             setIsCreated(true);
         }
     };
@@ -39,7 +42,14 @@ export default function CreateRoomPage() {
     };
 
     return (
-        <div className="min-h-screen bg-background flex flex-col">
+        <div className="min-h-screen bg-background flex flex-col animated-background">
+            {/* Moving circles */}
+            {/* Floating blurred circles */}
+            <div className="circle w-40 h-40 bg-white/10 !animate-[float1_18s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
+            <div className="circle w-32 h-32 bg-white/15 animate-[float2_25s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
+            <div className="circle w-48 h-48 bg-white/10 animate-[float3_10s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
+            <div className="circle w-36 h-36 bg-white/20 animate-[float4_40s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
+
             {/* Header */}
             <header className="border-b border-border bg-card/50 backdrop-blur-sm">
                 <div className="container mx-auto px-4 py-4">
@@ -91,11 +101,21 @@ export default function CreateRoomPage() {
                                         className="bg-input border-border text-card-foreground placeholder:text-muted"
                                     />
                                 </div>
+                                <div className="space-y-6">
+                                    <div className="text-center">
+                                        <Label className="text-card-foreground">Room Code</Label>
+                                        <Input
+                                            value={roomCode}
+                                            onChange={(e) => setRoomCode(e.target.value.toUpperCase())} // optional: force uppercase
+                                            className="mt-2 p-4 text-3xl font-mono font-bold text-card-foreground tracking-wider  bg-input border border-border rounded-lg"
+                                        />
+                                    </div>
+                                </div>
 
                                 <Button
                                     onClick={handleCreateRoom}
-                                    disabled={!roomName.trim() || !userName.trim()}
-                                    className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                                    disabled={!roomName.trim() || !userName.trim() || !roomCode.trim()}
+                                    className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90 duration-300 cursor-pointer"
                                     size="lg"
                                 >
                                     <Plus className="h-4 w-4 mr-2" />
@@ -115,9 +135,12 @@ export default function CreateRoomPage() {
                             <CardContent className="space-y-6">
                                 <div className="text-center">
                                     <Label className="text-card-foreground">Room Code</Label>
-                                    <div className="mt-2 p-4 bg-input rounded-lg border border-border">
-                                        <div className="text-3xl font-mono font-bold text-card-foreground tracking-wider">{roomCode}</div>
-                                    </div>
+                                    <Input
+                                        value={roomCode}
+                                        readOnly
+                                        onChange={(e) => setRoomCode(e.target.value.toUpperCase())} // optional: force uppercase
+                                        className="mt-2 p-4 text-3xl font-mono font-bold text-card-foreground tracking-wider text-center bg-input border border-border rounded-lg"
+                                    />
                                 </div>
 
                                 <div className="space-y-3">

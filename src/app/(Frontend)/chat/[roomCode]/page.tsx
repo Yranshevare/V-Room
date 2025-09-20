@@ -76,15 +76,22 @@ export default function ChatRoomPage() {
     };
 
     return (
-        <div className="h-screen flex flex-col bg-[radial-gradient(circle_at_20%_30%,_#facc15_150px,_transparent_200px),radial-gradient(circle_at_80%_70%,_#ef4444_200px,_transparent_250px),_#3b82f6]">
+        <div className="min-h-screen bg-background w-full flex flex-col animate-chat-background">
+            {/* Floating blurred circles */}
+            <div className="circle w-40 h-40 !absolute bg-white/10 !animate-[float1_30s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
+            <div className="circle w-32 h-32 !absolute bg-white/15 animate-[float2_25s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
+            <div className="circle w-48 h-48 !absolute bg-white/10 animate-[float3_15s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
+            <div className="circle w-36 h-36 !absolute bg-white/20 animate-[float4_20s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
+            <div className="circle w-36 h-36 !absolute bg-white/20 animate-[float5_12s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
+
             {/* Header */}
-            <header className="border-b border-border  backdrop-blur-sm">
+            <header className="border-b border-border bg-card/50 backdrop-blur-sm">
                 <div className="min-[920px]:!w-full  min-[920px]:mx-auto  px-4 py-3">
                     <div className="flex  items-center justify-between">
                         <div className="flex  items-center gap-4">
-                            <Button variant="ghost" size="sm" onClick={() => router.back()} className="text-muted hover:bg-transparent hover:text-black cursor-pointer ">
+                            {/* <Button variant="ghost" size="sm" onClick={() => router.back()} className="text-muted hover:bg-transparent hover:text-black cursor-pointer ">
                                 <ArrowLeft className="h-4 w-4" />
-                            </Button>
+                            </Button> */}
                             <div className="flex items-center gap-3">
                                 <div className="w-8 h-8 bg-secondary/10 rounded-full flex items-center justify-center">
                                     <MessageCircle className="h-4 w-4 text-secondary" />
@@ -117,7 +124,7 @@ export default function ChatRoomPage() {
             </header>
 
             {/* Messages */}
-            <main className="flex-1 bg-[url('/chatting-background.jpg')] bg-[length:200px_200px] bg-repeat  overflow-hidden flex 2xl:px-90 min-[920px]:px-50  flex-col">
+            <div className="flex-1    overflow-hidden flex 2xl:px-90 min-[920px]:px-50  flex-col">
                 <div className="flex-1 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden p-4 space-y-4">
                     {messages.map((message) => (
                         <div key={message.id} className={`flex ${message.isOwn ? "justify-end" : "justify-start"}`}>
@@ -146,7 +153,7 @@ export default function ChatRoomPage() {
 
                 {/* Message Input */}
                 <ChatInput setMessages={setMessages} isConnected={isConnected} />
-            </main>
+            </div>
         </div>
     );
 }
