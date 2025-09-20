@@ -30,14 +30,24 @@ export default function JoinRoomPage() {
     };
 
     return (
-        <div className="min-h-screen bg-background flex flex-col">
+        <div className="min-h-screen bg-background flex flex-col animated-background">
+
+
+            {/* Moving circles */}
+            {/* Floating blurred circles */}
+            <div className="circle w-40 h-40 bg-white/10 !animate-[float1_18s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
+            <div className="circle w-32 h-32 bg-white/15 animate-[float2_25s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
+            <div className="circle w-48 h-48 bg-white/10 animate-[float3_10s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
+            <div className="circle w-36 h-36 bg-white/20 animate-[float4_40s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
+
+
+
             {/* Header */}
             <header className="border-b border-border bg-card/50 backdrop-blur-sm">
                 <div className="container mx-auto px-4 py-4">
                     <div className="flex items-center gap-4">
-                        <Button variant="ghost" size="sm" onClick={() => router.back()} className="text-muted hover:text-foreground">
+                        <Button variant="ghost" size="sm" onClick={() => router.back()} className="text-muted hover:text-foreground hover:bg-transparent cursor-pointer">
                             <ArrowLeft className="h-4 w-4 mr-2" />
-                            Back
                         </Button>
                         <h1 className="text-xl font-semibold text-foreground">Join Room</h1>
                     </div>

@@ -54,9 +54,8 @@ export default function CreateRoomPage() {
             <header className="border-b border-border bg-card/50 backdrop-blur-sm">
                 <div className="container mx-auto px-4 py-4">
                     <div className="flex items-center gap-4">
-                        <Button variant="ghost" size="sm" onClick={() => router.back()} className="text-muted hover:text-foreground">
+                        <Button variant="ghost" size="sm" onClick={() => router.back()} className="text-muted hover:text-foreground hover:bg-transparent cursor-pointer ">
                             <ArrowLeft className="h-4 w-4 mr-2" />
-                            Back
                         </Button>
                         <h1 className="text-xl font-semibold text-foreground">Create Room</h1>
                     </div>
@@ -70,7 +69,7 @@ export default function CreateRoomPage() {
                         <Card className="border-border">
                             <CardHeader className="text-center">
                                 <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                                    <Plus className="h-8 w-8 text-primary" />
+                                    <Plus className="h-8 w-8 text-secondary" />
                                 </div>
                                 <CardTitle className="text-2xl text-card-foreground">Create New Room</CardTitle>
                                 <p className="text-muted">Set up your chat room and get started</p>
@@ -147,7 +146,7 @@ export default function CreateRoomPage() {
                                     <Button
                                         onClick={handleCopyCode}
                                         variant="outline"
-                                        className="w-full border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground bg-transparent"
+                                        className="w-full border-secondary text-secondary opacity-75 hover:bg-gray-50/50 hover:text-secondary hover:opacity-100 cursor-pointer duration-300 bg-transparent"
                                     >
                                         {copied ? (
                                             <>
@@ -164,7 +163,7 @@ export default function CreateRoomPage() {
 
                                     <Button
                                         onClick={handleJoinRoom}
-                                        className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                                        className="w-full bg-secondary text-primary-foreground hover:bg-secondary/90 cursor-pointer duration-300"
                                         size="lg"
                                     >
                                         Enter Chat Room
