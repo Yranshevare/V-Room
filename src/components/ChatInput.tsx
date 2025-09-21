@@ -3,6 +3,8 @@ import { Button } from "./ui/button";
 import { Send, SmilePlus } from "lucide-react";
 import EmojiPicker from "emoji-picker-react";
 import { useSearchParams } from "next/navigation";
+import io, { Socket } from "socket.io-client";
+// import  from "socket.io";
 
 interface Message {
     id: string;
@@ -12,13 +14,9 @@ interface Message {
     isOwn: boolean;
 }
 
-export default function ChatInput({
-    setMessages,
-    isConnected,
-}: {
-    setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
-    isConnected: boolean;
-}) {
+let socket: Socket;
+
+export default function ChatInput({ setMessages }: { setMessages: React.Dispatch<React.SetStateAction<Message[]>> }) {
     const searchParams = useSearchParams();
 
     const [showPicker, setShowPicker] = useState(false);
@@ -51,6 +49,8 @@ export default function ChatInput({
                 timestamp: new Date(),
                 isOwn: true,
             };
+
+            socket.emit("message", message);
             setMessages((prev) => [...prev, message]);
             setNewMessage("");
         }
@@ -63,6 +63,19 @@ export default function ChatInput({
         }
     };
 
+    useEffect(() => {
+        socket = io("http://localhost:4000");
+        socket.on("connect", () => {
+            console.log("✅ Connected to socket server with id:", socket.id);
+        });
+        socket.on("message", (message: Message) => {
+            console.log("message from server"+JSON.stringify(message, null, 2));// cant see the this console log
+        });
+        return () => {
+            socket.disconnect();
+        };
+    }, []);
+
     return (
         <div className="p-2">
             <div className=" bg-gray-200 shadow rounded-lg ">
@@ -73,7 +86,6 @@ export default function ChatInput({
                         onKeyPress={handleKeyPress}
                         placeholder="Type your message..."
                         className="flex-1 outline-none resize-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden text-foreground placeholder:text-muted"
-                        disabled={!isConnected}
                     />
                     <Button onClick={() => setShowPicker(!showPicker)} className="bg-white  shadow-none text-secondary-foreground hover:bg-white">
                         <SmilePlus className="size-6 text-secondary" />
@@ -81,7 +93,7 @@ export default function ChatInput({
 
                     <Button
                         onClick={handleSendMessage}
-                        disabled={!newMessage.trim() || !isConnected}
+                        disabled={!newMessage.trim()}
                         className="bg-white  shadow-none text-secondary-foreground hover:bg-white"
                     >
                         <Send className="size-6 text-secondary" />

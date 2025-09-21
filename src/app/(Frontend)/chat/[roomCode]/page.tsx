@@ -22,17 +22,12 @@ interface Message {
 }
 
 export default function ChatRoomPage() {
-    const router = useRouter();
     const params = useParams();
     const searchParams = useSearchParams();
     const roomCode = params.roomCode as string;
 
     const roomName = searchParams.get("room") || `Room ${roomCode}`;
-
     const [messages, setMessages] = useState<Message[]>([]);
-
-    const [isConnected, setIsConnected] = useState(true);
-
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     // Simulate some initial messages
@@ -101,11 +96,7 @@ export default function ChatRoomPage() {
                                     <div className="flex items-center gap-2 text-sm text-muted">
                                         {/* Glowing status dot */}
                                         <div
-                                            className={`relative w-2 h-2 rounded-full ${
-                                                isConnected
-                                                    ? "bg-green-500 shadow-[0_0_8px_2px_rgba(34,197,94,0.6)] animate-pulse"
-                                                    : "bg-red-500 shadow-[0_0_8px_2px_rgba(239,68,68,0.6)] animate-pulse"
-                                            }`}
+                                            className={`relative w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_2px_rgba(34,197,94,0.6)] animate-pulse`}
                                         ></div>
 
                                         <Users className="h-3 w-3" />
@@ -152,7 +143,7 @@ export default function ChatRoomPage() {
                 </div>
 
                 {/* Message Input */}
-                <ChatInput setMessages={setMessages} isConnected={isConnected} />
+                <ChatInput setMessages={setMessages} />
             </div>
         </div>
     );
