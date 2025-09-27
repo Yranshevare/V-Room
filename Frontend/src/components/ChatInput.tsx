@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button } from "./ui/button";
 import { Send, SmilePlus } from "lucide-react";
 import EmojiPicker from "emoji-picker-react";
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import io, { Socket } from "socket.io-client";
 // import  from "socket.io";
 
@@ -18,10 +18,13 @@ let socket: Socket;
 
 export default function ChatInput({ setMessages }: { setMessages: React.Dispatch<React.SetStateAction<Message[]>> }) {
     const searchParams = useSearchParams();
+    const params = useParams();
 
     const [showPicker, setShowPicker] = useState(false);
     const [newMessage, setNewMessage] = useState("");
+    const roomCode = params.roomCode as string;
     const userName = searchParams.get("name") || "Anonymous";
+    const roomName = searchParams.get("room") || `Room ${roomCode}`;
     const emojiPickerRef = useRef<HTMLDivElement>(null);
     const onEmojiClick = (emojiData: { emoji: string }) => {
         setNewMessage((prev) => prev + emojiData.emoji);
@@ -42,16 +45,15 @@ export default function ChatInput({ setMessages }: { setMessages: React.Dispatch
 
     const handleSendMessage = () => {
         if (newMessage.trim()) {
-            const message: Message = {
+            const message = {
                 id: Date.now().toString(),
                 text: newMessage.trim(),
                 sender: userName,
                 timestamp: new Date(),
-                isOwn: true,
             };
 
-            socket.emit("message", message);
-            setMessages((prev) => [...prev, message]);
+            socket.emit("message", { roomId: roomCode + roomName, message: message });
+            // setMessages((prev) => [...prev, message]);
             setNewMessage("");
         }
     };
@@ -67,10 +69,19 @@ export default function ChatInput({ setMessages }: { setMessages: React.Dispatch
         socket = io("http://localhost:4000");
         socket.on("connect", () => {
             console.log("✅ Connected to socket server with id:", socket.id);
+            socket.emit("joinRoom", roomCode + roomName);
         });
+
         socket.on("message", (message: Message) => {
-            console.log("message from server"+JSON.stringify(message, null, 2));// cant see the this console log
+            const newMessage = {
+                ...message,
+                timestamp: new Date(message.timestamp),
+                isOwn: message.sender === userName,
+            };
+            // console.log(message)
+            setMessages((prev) => [...prev, newMessage]);
         });
+
         return () => {
             socket.disconnect();
         };

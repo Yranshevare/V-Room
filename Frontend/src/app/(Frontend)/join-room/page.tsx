@@ -14,10 +14,11 @@ export default function JoinRoomPage() {
     const router = useRouter();
     const [roomCode, setRoomCode] = useState("");
     const [userName, setUserName] = useState("");
+    const [roomName, setRoomName] = useState("");
 
     const handleJoinRoom = () => {
         if (roomCode.trim() && userName.trim()) {
-            router.push(`/chat/${roomCode.toUpperCase()}?name=${encodeURIComponent(userName)}`);
+            router.push(`/chat/${roomCode.toUpperCase()}?name=${encodeURIComponent(userName)}&room=${encodeURIComponent(roomName)}`);
         }
     };
 
@@ -79,6 +80,19 @@ export default function JoinRoomPage() {
                                     maxLength={6}
                                 />
                                 <p className="text-xs text-muted text-center">Room codes are 6 characters long (letters and numbers)</p>
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="roomCode" className="text-card-foreground">
+                                    Room Name
+                                </Label>
+                                <Input
+                                    id="roomCode"
+                                    placeholder="Enter room name"
+                                    value={roomName}
+                                    onChange={(e)=> setRoomName(e.target.value)}
+                                    className="bg-input border-border text-card-foreground placeholder:text-muted  text-lg font-mono tracking-wider"
+                                    maxLength={6}
+                                />
                             </div>
 
                             <div className="space-y-2">
