@@ -4,17 +4,17 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Check, Copy, UserRoundPlus } from "lucide-react";
 import { Button } from "./ui/button";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { appServer } from "@/constant";
 
 export default function InviteDialog() {
     const params = useParams();
     const searchParams = useSearchParams();
     const roomCode = params.roomCode as string;
-    const userName = searchParams.get("name") || "Anonymous";
     const roomName = searchParams.get("room") || `Room ${roomCode}`;
 
     const [LinkCopied, setLinkCopied] = useState(false);
 
-    const link = `/chat/${roomCode}?name=${userName}&room=${roomName}`;
+    const link = `${appServer}/join-room?roomCode=${roomCode}&room=${roomName}`;
 
     const handleCopyLink = async () => {
         try {

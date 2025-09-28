@@ -8,14 +8,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ArrowLeft, Loader2, Users } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 
 export default function JoinRoomPage() {
     const router = useRouter();
-    const [roomCode, setRoomCode] = useState("");
+    const searchParams = useSearchParams();
+
+    const room = searchParams.get("room");
+    const code = searchParams.get("roomCode");
+    // console.log(room, code);
+
+    const [roomCode, setRoomCode] = useState(code || "");
     const [userName, setUserName] = useState("");
-    const [roomName, setRoomName] = useState("");
+    const [roomName, setRoomName] = useState(room || "");
     const [error, setError] = useState("");
     const [isJoining, setIsJoining] = useState(false);
 
