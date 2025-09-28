@@ -5,14 +5,14 @@ import bcrypt from "bcrypt";
 
 export async function GET(req: NextRequest) {
     try {
-        const roomCode = req.nextUrl.searchParams.get("roomCode");
+        const roomCode = req.nextUrl.searchParams.get("roomCode") as string;
         const UserName = req.nextUrl.searchParams.get("userName") as string;
         const roomName = req.nextUrl.searchParams.get("roomName");
         console.log(roomCode);
         console.log(UserName);
         console.log(roomName);
 
-        const existingRoom = await client.hGetAll(`${roomName}`);
+        const existingRoom = await client.hGetAll(`${roomCode+roomName}`);
         if (Object.keys(existingRoom).length === 0) {
             return response({ message: "Room not exist", status: 400 });
         }
@@ -27,13 +27,13 @@ export async function GET(req: NextRequest) {
             return response({ message: "Room code is incorrect", status: 400 });
         }
 
-        const existingUser = await client.hGet(`${roomName}:users`, UserName );
+        const existingUser = await client.hGet(`${roomCode+roomName}:users`, UserName );
         if (existingUser) {
             return response({ message: "User already exist, please use different name", status: 400 });
         }
         // console.log(existingUser);
 
-        await client.hSet(`${roomName}:users`,  UserName, "1" );
+        await client.hSet(`${roomCode+roomName}:users`,  UserName, "1" );
 
         return response({ message: "Success", status: 200 });
     } catch (error) {

@@ -3,6 +3,7 @@ import { createServer } from "node:http";
 import path from "path";
 import { Server } from "socket.io";
 import cors from "cors";
+import client from "./redisConnection.js";
 
 const app = express();
 const server = createServer(app);
@@ -32,11 +33,32 @@ io.on("connection", (socket) => {
     socket.on("joinRoom", (roomId) => {
         socket.join(roomId);
         console.log(`User ${socket.id} joined room ${roomId}`);
+
+        const users = Array.from(io.sockets.adapter.rooms.get(roomId) || []);
+        io.to(roomId).emit("UserCount", users.length);
     });
 
+    socket.on("disconnecting", async() => {
+        const rooms = Array.from(socket.rooms);
+        for (const room of rooms) {
+            if (room !== socket.id) {
+                const users = Array.from(io.sockets.adapter.rooms.get(room) || []);
+                if(users.length -1 === 0){
+                    console.log(`Room ${room} is now empty`);
+                    await client.del(room);
+                    await client.del(`${room}:users`);
+                }
+                io.to(room).emit("UserCount", users.length - 1);
+            }
+        }
+    })
+
     // Listen for messages
-    socket.on("message", ({ roomId, message }) => {
+    socket.on("message", async ({ roomId, message }) => {
         console.log(`Message in ${roomId}:`, message);
+        // reset the expiry time
+        await client.expire(`${roomId}`, 60*30);
+        await client.expire(`${roomId}:users`, 60*30);
 
         // Emit only to people in that room
         io.to(roomId).emit("message", message);

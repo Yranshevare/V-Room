@@ -5,7 +5,6 @@ import EmojiPicker from "emoji-picker-react";
 import { useParams, useSearchParams } from "next/navigation";
 import io, { Socket } from "socket.io-client";
 import { websocketServerUrl } from "@/constant";
-// import  from "socket.io";
 
 interface Message {
     id: string;
@@ -17,7 +16,13 @@ interface Message {
 
 let socket: Socket;
 
-export default function ChatInput({ setMessages }: { setMessages: React.Dispatch<React.SetStateAction<Message[]>> }) {
+export default function ChatInput({
+    setMessages,
+    setNumberOfUsers,
+}: {
+    setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+    setNumberOfUsers: React.Dispatch<React.SetStateAction<number>>;
+}) {
     const searchParams = useSearchParams();
     const params = useParams();
 
@@ -54,7 +59,7 @@ export default function ChatInput({ setMessages }: { setMessages: React.Dispatch
             };
 
             socket.emit("message", { roomId: roomCode + roomName, message: message });
-            // setMessages((prev) => [...prev, message]);
+            setMessages((prev) => [...prev, {...message, isOwn: true}]);
             setNewMessage("");
         }
     };
@@ -80,8 +85,15 @@ export default function ChatInput({ setMessages }: { setMessages: React.Dispatch
                 isOwn: message.sender === userName,
             };
             // console.log(message)
-            setMessages((prev) => [...prev, newMessage]);
+            if(!newMessage.isOwn){
+                setMessages((prev) => [...prev, newMessage]);
+            }
         });
+
+        socket.on("UserCount", (numberOfUsers: number) => {
+            console.log(numberOfUsers);
+            setNumberOfUsers(numberOfUsers || 0);
+        })
 
         return () => {
             socket.disconnect();

@@ -44,7 +44,7 @@ export default function CreateRoomPage() {
                 console.log(error);
                 if (error.response.data.message === "Room already exists") {
                     // console.log("Room already exists");
-                    setError("Room already exists, please use different name for creating the room");
+                    setError("Room already exists, please use different name or code for creating the room");
                 }
             } finally {
                 setIsRoomCreating(false);

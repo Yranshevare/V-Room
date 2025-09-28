@@ -20,6 +20,15 @@ interface Message {
     timestamp: Date;
     isOwn: boolean;
 }
+const initialMessages: Message[] = [
+    {
+        id: "1",
+        text: "Welcome to the chat room!",
+        sender: "System",
+        timestamp: new Date(Date.now() - 300000),
+        isOwn: false,
+    },
+];
 
 export default function ChatRoomPage() {
     const params = useParams();
@@ -27,36 +36,12 @@ export default function ChatRoomPage() {
     const roomCode = params.roomCode as string;
 
     const roomName = searchParams.get("room") || `Room ${roomCode}`;
-    const [messages, setMessages] = useState<Message[]>([]);
+    const [messages, setMessages] = useState<Message[]>(() => {
+        const stored = sessionStorage.getItem("messages");
+        return stored ? JSON.parse(stored) : [];
+    });
     const messagesEndRef = useRef<HTMLDivElement>(null);
-
-    // Simulate some initial messages
-    useEffect(() => {
-        const initialMessages: Message[] = [
-            {
-                id: "1",
-                text: "Welcome to the chat room!",
-                sender: "System",
-                timestamp: new Date(Date.now() - 300000),
-                isOwn: false,
-            },
-            {
-                id: "2",
-                text: "Hey everyone! 👋",
-                sender: "Alice",
-                timestamp: new Date(Date.now() - 120000),
-                isOwn: false,
-            },
-            {
-                id: "3",
-                text: "Hello! Great to be here.",
-                sender: "Bob",
-                timestamp: new Date(Date.now() - 60000),
-                isOwn: false,
-            },
-        ];
-        setMessages(initialMessages);
-    }, []);
+    const [numberOfUsers, setNumberOfUsers] = useState(0);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -64,14 +49,17 @@ export default function ChatRoomPage() {
 
     useEffect(() => {
         scrollToBottom();
+        sessionStorage.setItem("messages", JSON.stringify(messages));
     }, [messages]);
 
+
     const formatTime = (date: Date) => {
-        return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+        console.log(typeof date)
+        return new Date(date).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
     };
 
     return (
-        <div className="min-h-screen bg-background w-full flex flex-col animate-chat-background">
+        <div className="h-screen bg-background w-full flex flex-col animate-chat-background">
             {/* Floating blurred circles */}
             <div className="circle w-40 h-40 !absolute bg-white/10 !animate-[float1_30s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
             <div className="circle w-32 h-32 !absolute bg-white/15 animate-[float2_25s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
@@ -80,8 +68,8 @@ export default function ChatRoomPage() {
             <div className="circle w-36 h-36 !absolute bg-white/20 animate-[float5_12s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
 
             {/* Header */}
-            <header className="border-b border-border bg-card/50 backdrop-blur-sm">
-                <div className="min-[920px]:!w-full  min-[920px]:mx-auto  px-4 py-3">
+            <header className="border-b border-border  z-10 bg-card/50 backdrop-blur-sm">
+                <div className="min-[920px]:!w-full   min-[920px]:mx-auto  px-4 py-3">
                     <div className="flex  items-center justify-between">
                         <div className="flex  items-center gap-4">
                             {/* <Button variant="ghost" size="sm" onClick={() => router.back()} className="text-muted hover:bg-transparent hover:text-black cursor-pointer ">
@@ -100,7 +88,7 @@ export default function ChatRoomPage() {
                                         ></div>
 
                                         <Users className="h-3 w-3" />
-                                        <span>4 online</span>
+                                        <span>{numberOfUsers} online</span>
                                     </div>
                                 </div>
                             </div>
@@ -117,7 +105,7 @@ export default function ChatRoomPage() {
             {/* Messages */}
             <div className="flex-1    overflow-hidden flex 2xl:px-90 min-[920px]:px-50  flex-col">
                 <div className="flex-1 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden p-4 space-y-4">
-                    {messages.map((message) => (
+                    {[...initialMessages, ...messages].map((message) => (
                         <div key={message.id} className={`flex ${message.isOwn ? "justify-end" : "justify-start"}`}>
                             <div className={`max-w-xs lg:max-w-md ${message.isOwn ? "order-2" : "order-1"}`}>
                                 {message.sender !== "System" && (
@@ -143,7 +131,7 @@ export default function ChatRoomPage() {
                 </div>
 
                 {/* Message Input */}
-                <ChatInput setMessages={setMessages} />
+                <ChatInput setMessages={setMessages} setNumberOfUsers={setNumberOfUsers} />
             </div>
         </div>
     );

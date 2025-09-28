@@ -6,8 +6,9 @@ export async function GET(req:NextRequest){
     try {
         const UserName = req.nextUrl.searchParams.get("userName") as string;
         const roomName = req.nextUrl.searchParams.get("roomName") as string;
+        const roomCode = req.nextUrl.searchParams.get("roomCode") as string;
 
-        await client.hDel(`${roomName}:users`, UserName);
+        await client.hDel(`${roomCode+roomName}:users`, UserName);
 
         return response({ message: "Success", status: 200 });
         

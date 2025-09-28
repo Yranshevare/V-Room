@@ -9,15 +9,20 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { websocketServerUrl } from "@/constant";
 import axios from "axios";
 import { PhoneOff, Loader2 } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
+
 
 export default function LeaveDialog() {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const params = useParams();
 
+    const roomCode = params.roomCode as string;
     const userName = searchParams.get("name") || "";
     const roomName = searchParams.get("room") || "";
 
@@ -27,8 +32,10 @@ export default function LeaveDialog() {
     const handleLeaveRoom = async () => {
         setLoading(true);
         try {
-            const res = await axios.get(`/api/LeaveRoom?userName=${userName}&roomName=${roomName}`);
+            const res = await axios.get(`/api/LeaveRoom?userName=${userName}&roomName=${roomName}&roomCode=${roomCode}`);
+            
             if (res.data.message === "Success") {
+                sessionStorage.removeItem("messages");
                 router.push("/");
             }
         } catch (error) {
@@ -36,6 +43,10 @@ export default function LeaveDialog() {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        
+    }, []);
 
     return (
         <AlertDialog open={open} onOpenChange={setOpen}>
