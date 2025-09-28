@@ -4,6 +4,7 @@ import { Send, SmilePlus } from "lucide-react";
 import EmojiPicker from "emoji-picker-react";
 import { useParams, useSearchParams } from "next/navigation";
 import io, { Socket } from "socket.io-client";
+import { websocketServerUrl } from "@/constant";
 // import  from "socket.io";
 
 interface Message {
@@ -66,7 +67,7 @@ export default function ChatInput({ setMessages }: { setMessages: React.Dispatch
     };
 
     useEffect(() => {
-        socket = io("http://localhost:4000");
+        socket = io(websocketServerUrl);
         socket.on("connect", () => {
             console.log("✅ Connected to socket server with id:", socket.id);
             socket.emit("joinRoom", roomCode + roomName);

@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, Plus, Copy, Check } from "lucide-react";
+import { ArrowLeft, Plus, Copy, Check, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function CreateRoomPage() {
     const router = useRouter();
@@ -15,6 +16,8 @@ export default function CreateRoomPage() {
     const [roomCode, setRoomCode] = useState("");
     const [isCreated, setIsCreated] = useState(false);
     const [copied, setCopied] = useState(false);
+    const [error, setError] = useState("");
+    const [isRoomCreating, setIsRoomCreating] = useState(false);
 
     useEffect(() => {
         const code = Math.random().toString(36).substring(2, 8).toUpperCase();
@@ -23,11 +26,29 @@ export default function CreateRoomPage() {
         }
     }, []);
 
-    const handleCreateRoom = () => {
+    const handleCreateRoom = async () => {
         if (roomName.trim() && userName.trim()) {
-            // const code = generateRoomCode();
-            // setRoomCode(code);
-            setIsCreated(true);
+            setIsRoomCreating(true);
+            try {
+                const res = await axios.post("api/checkRoomCredentials", {
+                    roomName: roomName,
+                    userName: userName,
+                    roomCode: roomCode,
+                });
+                console.log(res);
+
+                if (res.data.message === "Success") {
+                    setIsCreated(true);
+                }
+            } catch (error: any) {
+                console.log(error);
+                if (error.response.data.message === "Room already exists") {
+                    // console.log("Room already exists");
+                    setError("Room already exists, please use different name for creating the room");
+                }
+            } finally {
+                setIsRoomCreating(false);
+            }
         }
     };
 
@@ -54,7 +75,12 @@ export default function CreateRoomPage() {
             <header className="border-b border-border bg-card/50 backdrop-blur-sm">
                 <div className="container mx-auto px-4 py-4">
                     <div className="flex items-center gap-4">
-                        <Button variant="ghost" size="sm" onClick={() => router.back()} className="text-muted hover:text-foreground hover:bg-transparent cursor-pointer ">
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => router.back()}
+                            className="text-muted hover:text-foreground hover:bg-transparent cursor-pointer "
+                        >
                             <ArrowLeft className="h-4 w-4 mr-2" />
                         </Button>
                         <h1 className="text-xl font-semibold text-foreground">Create Room</h1>
@@ -113,13 +139,15 @@ export default function CreateRoomPage() {
 
                                 <Button
                                     onClick={handleCreateRoom}
-                                    disabled={!roomName.trim() || !userName.trim() || !roomCode.trim()}
+                                    disabled={!roomName.trim() || !userName.trim() || !roomCode.trim() || isRoomCreating}
                                     className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90 duration-300 cursor-pointer"
                                     size="lg"
                                 >
-                                    <Plus className="h-4 w-4 mr-2" />
-                                    Create Room
+                                    {!isRoomCreating && <Plus className="h-4 w-4 mr-2" />}
+                                    
+                                    {isRoomCreating ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : "Create Room"}
                                 </Button>
+                                {error !== "" && <p className="text-red-500 text-center text-sm">{error}</p>}
                             </CardContent>
                         </Card>
                     ) : (

@@ -7,18 +7,35 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, Users } from "lucide-react";
+import { ArrowLeft, Loader2, Users } from "lucide-react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function JoinRoomPage() {
     const router = useRouter();
     const [roomCode, setRoomCode] = useState("");
     const [userName, setUserName] = useState("");
     const [roomName, setRoomName] = useState("");
+    const [error, setError] = useState("");
+    const [isJoining, setIsJoining] = useState(false);
 
-    const handleJoinRoom = () => {
-        if (roomCode.trim() && userName.trim()) {
-            router.push(`/chat/${roomCode.toUpperCase()}?name=${encodeURIComponent(userName)}&room=${encodeURIComponent(roomName)}`);
+    const handleJoinRoom = async () => {
+        if (!roomCode.trim() || !userName.trim()) return;
+        setIsJoining(true);
+        try {
+            const res = await axios.get("/api/joinRoom?roomCode=" + roomCode + "&userName=" + userName + "&roomName=" + roomName);
+            console.log(res);
+            if (res.data.message === "Success") {
+                router.push(`/chat/${roomCode.toUpperCase()}?name=${encodeURIComponent(userName)}&room=${encodeURIComponent(roomName)}`);
+            }
+        } catch (error: any) {
+            console.log(error);
+            if (error?.response.data.message) {
+                console.log(error?.response.data.message);
+                setError(error?.response.data.message);
+            }
+        } finally {
+            setIsJoining(false);
         }
     };
 
@@ -32,8 +49,6 @@ export default function JoinRoomPage() {
 
     return (
         <div className="min-h-screen bg-background flex flex-col animated-background">
-
-
             {/* Moving circles */}
             {/* Floating blurred circles */}
             <div className="circle w-40 h-40 bg-white/10 !animate-[float1_18s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
@@ -41,13 +56,16 @@ export default function JoinRoomPage() {
             <div className="circle w-48 h-48 bg-white/10 animate-[float3_10s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
             <div className="circle w-36 h-36 bg-white/20 animate-[float4_40s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
 
-
-
             {/* Header */}
             <header className="border-b border-border bg-card/50 backdrop-blur-sm">
                 <div className="container mx-auto px-4 py-4">
                     <div className="flex items-center gap-4">
-                        <Button variant="ghost" size="sm" onClick={() => router.back()} className="text-muted hover:text-foreground hover:bg-transparent cursor-pointer">
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => router.back()}
+                            className="text-muted hover:text-foreground hover:bg-transparent cursor-pointer"
+                        >
                             <ArrowLeft className="h-4 w-4 mr-2" />
                         </Button>
                         <h1 className="text-xl font-semibold text-foreground">Join Room</h1>
@@ -89,7 +107,7 @@ export default function JoinRoomPage() {
                                     id="roomCode"
                                     placeholder="Enter room name"
                                     value={roomName}
-                                    onChange={(e)=> setRoomName(e.target.value)}
+                                    onChange={(e) => setRoomName(e.target.value)}
                                     className="bg-input border-border text-card-foreground placeholder:text-muted  text-lg font-mono tracking-wider"
                                     maxLength={6}
                                 />
@@ -110,12 +128,17 @@ export default function JoinRoomPage() {
 
                             <Button
                                 onClick={handleJoinRoom}
-                                disabled={roomCode.length !== 6 || !userName.trim()}
-                                className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90"
+                                disabled={roomCode.length !== 6 || !userName.trim() || isJoining}
+                                className="w-full bg-secondary text-secondary-foreground cursor-pointer hover:bg-secondary/90"
                                 size="lg"
                             >
-                                <Users className="h-4 w-4 mr-2" />
-                                Join Room
+                                {isJoining ? (
+                                    <Loader2 className="animate-spin h-4 w-4 ml-2" />
+                                ) : (
+                                    <>
+                                        <Users className="h-4 w-4 mr-2" /> join Room
+                                    </>
+                                )}
                             </Button>
 
                             <div className="text-center">
@@ -125,6 +148,7 @@ export default function JoinRoomPage() {
                                         Create a room
                                     </button>
                                 </p>
+                                {error && <p className="text-sm text-red-400 ">{error}</p>}
                             </div>
                         </CardContent>
                     </Card>

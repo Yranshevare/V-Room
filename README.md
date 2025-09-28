@@ -48,7 +48,7 @@ a chat application for smooth and secure communication between peoples without a
 
 
 ### Workflow
-![workflow image](./Untitled%20Diagram.drawio.png)
+![workflow image](./Frontend/Untitled%20Diagram.drawio.png)
 
 
 
