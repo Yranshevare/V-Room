@@ -1,7 +1,7 @@
 import client from "@/lib/db.connection";
 import response from "@/lib/response";
 import { NextRequest } from "next/server";
-import bcrypt from "bcrypt";
+import { encrypt } from "@/lib/encrypt";
 
 export async function GET(req: NextRequest) {
     try {
@@ -12,28 +12,21 @@ export async function GET(req: NextRequest) {
         console.log(UserName);
         console.log(roomName);
 
-        const existingRoom = await client.hGetAll(`${roomCode+roomName}`);
+        const roomId = await encrypt(roomCode + roomName);
+        const hashedUserName = await encrypt(UserName);
+
+        const existingRoom = await client.hGetAll(`${roomId}`);
         if (Object.keys(existingRoom).length === 0) {
             return response({ message: "Room not exist", status: 400 });
         }
 
-
-        const code = existingRoom.code;
-
-        if(!roomCode || !roomCode){
-            return response({ message: "Room code is not provided", status: 400 });
-        }
-        if(!await bcrypt.compare(roomCode, code)){
-            return response({ message: "Room code is incorrect", status: 400 });
-        }
-
-        const existingUser = await client.hGet(`${roomCode+roomName}:users`, UserName );
+        const existingUser = await client.hGet(`${roomId}`, hashedUserName);
         if (existingUser) {
             return response({ message: "User already exist, please use different name", status: 400 });
         }
         // console.log(existingUser);
 
-        await client.hSet(`${roomCode+roomName}:users`,  UserName, "1" );
+        await client.hSet(`${roomId}`, hashedUserName, "1");
 
         return response({ message: "Success", status: 200 });
     } catch (error) {

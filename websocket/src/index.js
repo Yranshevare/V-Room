@@ -4,6 +4,7 @@ import path from "path";
 import { Server } from "socket.io";
 import cors from "cors";
 import client from "./redisConnection.js";
+import { encrypt } from "./encrypt.js";
 
 const app = express();
 const server = createServer(app);
@@ -45,8 +46,8 @@ io.on("connection", (socket) => {
                 const users = Array.from(io.sockets.adapter.rooms.get(room) || []);
                 if(users.length -1 === 0){
                     console.log(`Room ${room} is now empty`);
-                    await client.del(room);
-                    await client.del(`${room}:users`);
+                    const actualRoomId = await encrypt(room);
+                    await client.del(actualRoomId);
                 }
                 io.to(room).emit("UserCount", users.length - 1);
             }
@@ -56,9 +57,9 @@ io.on("connection", (socket) => {
     // Listen for messages
     socket.on("message", async ({ roomId, message }) => {
         console.log(`Message in ${roomId}:`, message);
+        const actualRoomId = await encrypt(roomId);
         // reset the expiry time
-        await client.expire(`${roomId}`, 60*30);
-        await client.expire(`${roomId}:users`, 60*30);
+        await client.expire(`${actualRoomId}`, 60*30);
 
         // Emit only to people in that room
         io.to(roomId).emit("message", message);

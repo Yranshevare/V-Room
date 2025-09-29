@@ -1,4 +1,5 @@
 import client from "@/lib/db.connection";
+import { encrypt } from "@/lib/encrypt";
 import response from "@/lib/response";
 import { NextRequest } from "next/server";
 
@@ -8,7 +9,10 @@ export async function GET(req:NextRequest){
         const roomName = req.nextUrl.searchParams.get("roomName") as string;
         const roomCode = req.nextUrl.searchParams.get("roomCode") as string;
 
-        await client.hDel(`${roomCode+roomName}:users`, UserName);
+        const roomId = await encrypt(roomCode + roomName);
+        const hashedUserName = await encrypt(UserName);
+
+        await client.hDel(`${roomId}`, hashedUserName);
 
         return response({ message: "Success", status: 200 });
         
