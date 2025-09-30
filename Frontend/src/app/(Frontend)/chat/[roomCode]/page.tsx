@@ -36,10 +36,7 @@ export default function ChatRoomPage() {
     const roomCode = params.roomCode as string;
 
     const roomName = searchParams.get("room") || `Room ${roomCode}`;
-    const [messages, setMessages] = useState<Message[]>(() => {
-        const stored = sessionStorage.getItem("messages");
-        return stored ? JSON.parse(stored) : [];
-    });
+    const [messages, setMessages] = useState<Message[]>([]);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const [numberOfUsers, setNumberOfUsers] = useState(0);
 
@@ -48,13 +45,20 @@ export default function ChatRoomPage() {
     };
 
     useEffect(() => {
+        // Only runs on client side
+        const stored = sessionStorage.getItem("messages");
+        if (stored) {
+            setMessages(JSON.parse(stored));
+        }
+    }, []);
+
+    useEffect(() => {
         scrollToBottom();
         sessionStorage.setItem("messages", JSON.stringify(messages));
     }, [messages]);
 
-
     const formatTime = (date: Date) => {
-        console.log(typeof date)
+        console.log(typeof date);
         return new Date(date).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
     };
 
