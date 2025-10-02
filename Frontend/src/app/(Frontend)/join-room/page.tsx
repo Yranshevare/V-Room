@@ -54,14 +54,8 @@ export default function JoinRoomPage() {
     };
 
     return (
-        <div className="min-h-screen w-full flex flex-col animated-background">
-            {/* Moving circles */}
-            {/* Floating blurred circles */}
-            <div className="circle w-40 h-40 bg-white/10 !animate-[float1_18s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
-            <div className="circle w-32 h-32 bg-white/15 animate-[float2_25s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
-            <div className="circle w-48 h-48 bg-white/10 animate-[float3_10s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
-            <div className="circle w-36 h-36 bg-white/20 animate-[float4_40s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
-
+        <div className="min-h-screen w-full flex flex-col ">
+            
             {/* Header */}
             <header className="border-b border-border bg-card/50 backdrop-blur-sm">
                 <div className="container mx-auto px-4 py-4">

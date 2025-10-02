@@ -3,12 +3,10 @@
 import type React from "react";
 
 import { useState, useEffect, useRef } from "react";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, Send, Users, MessageCircle, SmilePlus } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { Users, MessageCircle } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import { useParams } from "next/navigation";
-import EmojiPicker from "emoji-picker-react";
 import InviteDialog from "@/components/InviteDialog";
 import LeaveDialog from "@/components/LeaveDialog";
 import ChatInput from "@/components/ChatInput";
@@ -41,7 +39,11 @@ export default function ChatRoomPage() {
     const [numberOfUsers, setNumberOfUsers] = useState(0);
 
     const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        messagesEndRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest", 
+            inline: "nearest",
+        });
     };
 
     useEffect(() => {
@@ -63,13 +65,7 @@ export default function ChatRoomPage() {
     };
 
     return (
-        <div className="h-screen  w-full flex flex-col animate-chat-background">
-            {/* Floating blurred circles */}
-            <div className="circle w-40 h-40 !absolute bg-white/10 !animate-[float1_30s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
-            <div className="circle w-32 h-32 !absolute bg-white/15 animate-[float2_25s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
-            <div className="circle w-48 h-48 !absolute bg-white/10 animate-[float3_15s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
-            <div className="circle w-36 h-36 !absolute bg-white/20 animate-[float4_20s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
-            <div className="circle w-36 h-36 !absolute bg-white/20 animate-[float5_12s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
+        <div className="h-screen w-full  flex flex-col">
 
             {/* Header */}
             <header className="border-b border-border  z-10 bg-card/50 backdrop-blur-sm">
@@ -107,7 +103,7 @@ export default function ChatRoomPage() {
             </header>
 
             {/* Messages */}
-            <div className="flex-1    overflow-hidden flex 2xl:px-90 min-[920px]:px-50  flex-col">
+            <div className="flex-1 overflow-hidden flex 2xl:px-90 min-[920px]:px-50  flex-col">
                 <div className="flex-1 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden p-4 space-y-4">
                     {[...initialMessages, ...messages].map((message) => (
                         <div key={message.id} className={`flex ${message.isOwn ? "justify-end" : "justify-start"}`}>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { AnimatedBubbleParticles } from "@/components/lightswind/animated-bubble-particles";
+import AnimatedBubbleParticles from "@/components/lightswind/animated-bubble-particles";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -37,8 +37,24 @@ export default function RootLayout({
                         }}
                     />
                     {/* Your content goes here */}
-                    <AnimatedBubbleParticles particleColor="#ffd6e8" backgroundColor="transparent">
-                        <div className="w-full backdrop-blur-lg">{children}</div>
+                    <AnimatedBubbleParticles
+                        particleColor={[
+                            "#AEC6CF", // pastel blue (harmonizes with your background blue)
+                            "#FFB6C1", // pastel pink (same as background pink)
+                            "#FFDAB9", // peach / soft orange
+                            "#FFFACD", // light lemon
+                            "#E6E6FA", // lavender
+                            "#98FB98", // mint green
+                        ]}
+                    >
+                        <div className="w-full backdrop-blur-lg animated-background">
+                            {/* Floating blurred circles */}
+                            <div className="circle w-40 h-40 bg-white/10 !animate-[float1_18s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
+                            <div className="circle w-32 h-32 bg-white/15 animate-[float2_25s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
+                            <div className="circle w-48 h-48 bg-white/10 animate-[float3_10s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
+                            <div className="circle w-36 h-36 bg-white/20 animate-[float4_40s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
+                            {children}
+                        </div>
                     </AnimatedBubbleParticles>
                 </div>
             </body>

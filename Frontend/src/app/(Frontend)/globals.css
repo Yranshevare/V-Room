@@ -120,10 +120,7 @@
     position: relative;
     overflow: hidden;
 }
-.animate-chat-background{
-    position: fixed;
-    bottom: 0;
-}
+
 
 /* Floating circles */
 .animated-background .circle {
@@ -132,12 +129,7 @@
     filter: blur(40px);
     opacity: 0.3;
 }
-.animate-chat-background .circle {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(40px);
-    opacity: 0.5;
-}
+
 
 /* Different animations for each circle */
  @keyframes float1 {
