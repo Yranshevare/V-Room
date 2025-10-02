@@ -54,7 +54,7 @@ export default function JoinRoomPage() {
     };
 
     return (
-        <div className="min-h-screen bg-background flex flex-col animated-background">
+        <div className="min-h-screen w-full flex flex-col animated-background">
             {/* Moving circles */}
             {/* Floating blurred circles */}
             <div className="circle w-40 h-40 bg-white/10 !animate-[float1_18s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
@@ -82,7 +82,7 @@ export default function JoinRoomPage() {
             {/* Main Content */}
             <main className="flex-1 flex items-center justify-center p-4">
                 <div className="w-full max-w-md">
-                    <Card className="border-border">
+                    <Card className="border-border bg-white/30">
                         <CardHeader className="text-center">
                             <div className="mx-auto w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mb-4">
                                 <Users className="h-8 w-8 text-secondary" />
@@ -100,7 +100,7 @@ export default function JoinRoomPage() {
                                     placeholder="Enter 6-digit room code"
                                     value={roomCode}
                                     onChange={handleRoomCodeChange}
-                                    className="bg-input border-border text-card-foreground placeholder:text-muted text-center text-lg font-mono tracking-wider"
+                                    className="bg-input/30 border-border text-card-foreground placeholder:text-muted text-center text-lg font-mono tracking-wider"
                                     maxLength={6}
                                 />
                                 <p className="text-xs text-muted text-center">Room codes are 6 characters long (letters and numbers)</p>
@@ -114,7 +114,7 @@ export default function JoinRoomPage() {
                                     placeholder="Enter room name"
                                     value={roomName}
                                     onChange={(e) => setRoomName(e.target.value)}
-                                    className="bg-input border-border text-card-foreground placeholder:text-muted  text-lg font-mono tracking-wider"
+                                    className="bg-input/30 border-border text-card-foreground placeholder:text-muted  text-lg font-mono tracking-wider"
                                     maxLength={6}
                                 />
                             </div>
@@ -128,7 +128,7 @@ export default function JoinRoomPage() {
                                     placeholder="Enter your name"
                                     value={userName}
                                     onChange={(e) => setUserName(e.target.value)}
-                                    className="bg-input border-border text-card-foreground placeholder:text-muted"
+                                    className="bg-input/30 border-border text-card-foreground placeholder:text-muted"
                                 />
                             </div>
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { AnimatedBubbleParticles } from "@/components/lightswind/animated-bubble-particles";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -24,7 +25,23 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+            <body className={`${geistSans.variable} ${geistMono.variable} antialiased `}>
+                <div className="min-h-screen bg-[#fefcff] w-full relative">
+                    {/* Aurora Dream Corner Whispers */}
+                    <div
+                        className="absolute inset-0 z-0"
+                        style={{
+                            backgroundImage: `
+                            radial-gradient(circle at 30% 70%, rgba(173, 216, 230, 0.35), transparent 60%),
+                            radial-gradient(circle at 70% 30%, rgba(255, 182, 193, 0.4), transparent 60%)`,
+                        }}
+                    />
+                    {/* Your content goes here */}
+                    <AnimatedBubbleParticles particleColor="#ffd6e8" backgroundColor="transparent">
+                        <div className="w-full backdrop-blur-lg">{children}</div>
+                    </AnimatedBubbleParticles>
+                </div>
+            </body>
         </html>
     );
 }

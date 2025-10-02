@@ -63,7 +63,7 @@ export default function ChatRoomPage() {
     };
 
     return (
-        <div className="h-screen bg-background w-full flex flex-col animate-chat-background">
+        <div className="h-screen  w-full flex flex-col animate-chat-background">
             {/* Floating blurred circles */}
             <div className="circle w-40 h-40 !absolute bg-white/10 !animate-[float1_30s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
             <div className="circle w-32 h-32 !absolute bg-white/15 animate-[float2_25s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
@@ -120,10 +120,10 @@ export default function ChatRoomPage() {
                                 <Card
                                     className={`p-3 rounded-3xl px-7 ${
                                         message.isOwn
-                                            ? "bg-secondary text-secondary-foreground rounded-tr-none"
+                                            ? "bg-secondary/70 text-secondary-foreground rounded-tr-none"
                                             : message.sender === "System"
-                                            ? "bg-muted/20 text-muted border-muted/30"
-                                            : "bg-card text-card-foreground rounded-tl-none"
+                                            ? "bg-muted/20 text-muted "
+                                            : "bg-card/20 text-card-foreground rounded-tl-none"
                                     }`}
                                 >
                                     <p className="text-sm leading-relaxed">{message.text}</p>

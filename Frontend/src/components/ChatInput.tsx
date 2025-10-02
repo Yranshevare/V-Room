@@ -71,6 +71,7 @@ export default function ChatInput({
         }
     };
 
+    
     useEffect(() => {
         socket = io(websocketServerUrl);
         socket.on("connect", () => {
@@ -102,8 +103,8 @@ export default function ChatInput({
 
     return (
         <div className="p-2">
-            <div className=" bg-gray-200 shadow rounded-lg ">
-                <div className="flex justify-between items-center gap-2  bg-white border-b border-1 py-2 px-5 rounded-lg">
+            <div className=" bg-gray-200/50 shadow rounded-lg ">
+                <div className="flex justify-between items-center gap-2  bg-white/70 border-b border-1 py-2 px-5 rounded-lg">
                     <textarea
                         value={newMessage}
                         onChange={(e) => setNewMessage(e.target.value)}
@@ -111,14 +112,14 @@ export default function ChatInput({
                         placeholder="Type your message..."
                         className="flex-1 outline-none resize-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden text-foreground placeholder:text-muted"
                     />
-                    <Button onClick={() => setShowPicker(!showPicker)} className="bg-white  shadow-none text-secondary-foreground hover:bg-white">
+                    <Button onClick={() => setShowPicker(!showPicker)} className="bg-transparent  shadow-none text-secondary-foreground hover:bg-transparent">
                         <SmilePlus className="size-6 text-secondary" />
                     </Button>
 
                     <Button
                         onClick={handleSendMessage}
                         disabled={!newMessage.trim()}
-                        className="bg-white  shadow-none text-secondary-foreground hover:bg-white"
+                        className="bg-transparent  shadow-none text-secondary-foreground hover:bg-transparent"
                     >
                         <Send className="size-6 text-secondary" />
                     </Button>

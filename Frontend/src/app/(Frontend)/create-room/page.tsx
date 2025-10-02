@@ -63,7 +63,7 @@ export default function CreateRoomPage() {
     };
 
     return (
-        <div className="min-h-screen bg-background flex flex-col animated-background">
+        <div className="min-h-screen w-full flex flex-col animated-background">
             {/* Moving circles */}
             {/* Floating blurred circles */}
             <div className="circle w-40 h-40 bg-white/10 !animate-[float1_18s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
@@ -92,7 +92,7 @@ export default function CreateRoomPage() {
             <main className="flex-1 flex items-center justify-center p-4">
                 <div className="w-full max-w-md">
                     {!isCreated ? (
-                        <Card className="border-border">
+                        <Card className="border-border bg-white/50">
                             <CardHeader className="text-center">
                                 <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
                                     <Plus className="h-8 w-8 text-secondary" />
@@ -110,7 +110,7 @@ export default function CreateRoomPage() {
                                         placeholder="Enter room name"
                                         value={roomName}
                                         onChange={(e) => setRoomName(e.target.value)}
-                                        className="bg-input border-border text-card-foreground placeholder:text-muted"
+                                        className="bg-input/50 border-border text-card-foreground placeholder:text-muted"
                                     />
                                 </div>
 
@@ -123,7 +123,7 @@ export default function CreateRoomPage() {
                                         placeholder="Enter your name"
                                         value={userName}
                                         onChange={(e) => setUserName(e.target.value)}
-                                        className="bg-input border-border text-card-foreground placeholder:text-muted"
+                                        className="bg-input/50 border-border text-card-foreground placeholder:text-muted"
                                     />
                                 </div>
                                 <div className="space-y-6">
@@ -132,7 +132,7 @@ export default function CreateRoomPage() {
                                         <Input
                                             value={roomCode}
                                             onChange={(e) => setRoomCode(e.target.value.toUpperCase())} // optional: force uppercase
-                                            className="mt-2 p-4 text-3xl font-mono font-bold text-card-foreground tracking-wider  bg-input border border-border rounded-lg"
+                                            className="mt-2 p-4 text-3xl font-mono font-bold text-card-foreground tracking-wider  bg-input/50 border border-border rounded-lg"
                                         />
                                     </div>
                                 </div>
@@ -151,9 +151,9 @@ export default function CreateRoomPage() {
                             </CardContent>
                         </Card>
                     ) : (
-                        <Card className="border-border">
+                        <Card className="border-border bg-white/30">
                             <CardHeader className="text-center">
-                                <div className="mx-auto w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mb-4">
+                                <div className="mx-auto w-16 h-16 bg-secondary/50 rounded-full flex items-center justify-center mb-4">
                                     <Check className="h-8 w-8 text-secondary" />
                                 </div>
                                 <CardTitle className="text-2xl text-card-foreground">Room Created!</CardTitle>
@@ -166,7 +166,7 @@ export default function CreateRoomPage() {
                                         value={roomCode}
                                         readOnly
                                         onChange={(e) => setRoomCode(e.target.value.toUpperCase())} // optional: force uppercase
-                                        className="mt-2 p-4 text-3xl font-mono font-bold text-card-foreground tracking-wider text-center bg-input border border-border rounded-lg"
+                                        className="mt-2 p-4 text-3xl font-mono font-bold text-card-foreground tracking-wider text-center bg-input/30 border border-border rounded-lg"
                                     />
                                 </div>
 

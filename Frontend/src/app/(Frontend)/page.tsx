@@ -9,7 +9,7 @@ export default function LandingPage() {
     const router = useRouter();
 
     return (
-        <div className="min-h-screen bg-background flex flex-col animated-background">
+        <div className="min-h-screen w-full flex flex-col animated-background">
             {/* Floating blurred circles */}
             <div className="circle w-40 h-40 !absolute bg-white/10 !animate-[float1_30s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
             <div className="circle w-32 h-32 !absolute bg-white/15 animate-[float2_25s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
@@ -45,7 +45,7 @@ export default function LandingPage() {
 
                     {/* Action Cards */}
                     <div className="space-y-4">
-                        <Card className="border-border hover:shadow-lg transition-shadow cursor-pointer" onClick={() => router.push("/create-room")}>
+                        <Card className="border-border hover:shadow-lg transition-shadow cursor-pointer bg-white/50" onClick={() => router.push("/create-room")}>
                             <CardContent className="p-6">
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
@@ -59,7 +59,7 @@ export default function LandingPage() {
                             </CardContent>
                         </Card>
 
-                        <Card className="border-border hover:shadow-lg transition-shadow cursor-pointer" onClick={() => router.push("/join-room")}>
+                        <Card className="border-border hover:shadow-lg transition-shadow cursor-pointer bg-white/50" onClick={() => router.push("/join-room")}>
                             <CardContent className="p-6">
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center">
