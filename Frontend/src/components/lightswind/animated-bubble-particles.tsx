@@ -52,12 +52,12 @@ const AnimatedBubbleParticles: React.FC<AnimatedBubbleParticlesProps> = ({
     className,
     backgroundColor = "ffffff", // Default fallback background color
     particleColor = "#c5a3f5",
-    particleSize = 50,
-    spawnInterval = 600,
+    particleSize = 100,
+    spawnInterval = 1000,
     height = "100vh", // Default to 100vh for full viewport height
     width = "100vw", // Default to 100vw for full viewport width
     enableGooEffect = true,
-    blurStrength = 10,
+    blurStrength = 50,
     pauseOnBlur = true,
     zIndex = 1,
     friction = { min: 1, max: 2 },
