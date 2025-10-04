@@ -274,7 +274,7 @@ const AnimatedBubbleParticles: React.FC<AnimatedBubbleParticlesProps> = ({
                 }}
             />
 
-            <div className="absolute inset-0 flex items-center justify-center z-10 w-full min-h-full">{children}</div>
+            <div className="absolute  inset-0 flex items-center justify-center z-10 w-full min-h-full">{children}</div>
 
             {enableGooEffect && (
                 <svg className="absolute w-0 h-0 z-0">

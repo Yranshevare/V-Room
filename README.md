@@ -53,7 +53,7 @@ a chat application for smooth and secure communication between peoples without a
 * **redis : message Broker and for data storing**
 
 ### Workflow
-![workflow image](./Frontend/Untitled%20Diagram.drawio.png)
+![workflow image](./Frontend/public/workflow.png)
 
 **This diagram represents the workflow of real-time communication between multiple users using virtual rooms. Each room acts as a private space where messages are exchanged only between members of that specific room. The steps are as follows:**
 
@@ -80,7 +80,7 @@ a chat application for smooth and secure communication between peoples without a
 
 ### Websocket Architecture
 
-![Socket connection flow](./Frontend/socket_connection.jpg)
+![Socket connection flow](./Frontend/public/socket_connection.jpg)
 
 **This diagram illustrates the distributed chat system architecture where multiple WebSocket servers handle real-time communication, while Redis ensures synchronization and message consistency across servers.**
 
@@ -114,7 +114,7 @@ a chat application for smooth and secure communication between peoples without a
 
 ### Message Flow Architecture
 
-![Message flow](./Frontend/message_flow.jpg)
+![Message flow](./Frontend/public/message_flow.jpg)
 
 
 **This diagram shows how a message sent from one client is delivered to receivers connected on the same server as well as different servers using Redis Pub/Sub.**

@@ -45,7 +45,7 @@ export default function RootLayout({
                             "#E6E6FA", // lavender
                         ]}
                     >
-                        <div className="w-full backdrop-blur-xl animated-background">
+                        <div className="w-full  backdrop-blur-xl animated-background">
                             {/* Floating blurred circles */}
                             <div className="circle w-40 h-40 bg-white/10 !animate-[float1_18s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
                             <div className="circle w-32 h-32 bg-white/15 animate-[float2_25s_linear_infinite] bg-gradient-to-r from-pink-500 via-yellow-500 to-green-500 bg-[length:400%_400%] " />
