@@ -33,6 +33,7 @@ const eslintConfig = [
 
       // Optional: disable strict JSX rule if needed
       "react/react-in-jsx-scope": "off",
+      "react/no-unescaped-entities": "off",
 
       // Optional: allow unused vars for debugging
       "@typescript-eslint/no-unused-vars": [
