@@ -3,6 +3,7 @@ import { Lock, Zap, Shield, Database, Users, Circle } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import LandingHeader from "@/components/LandingHeader";
+import LandingFooter from "@/components/LandingFooter";
 
 export default function VroomDocs() {
     const projectOverview = [
@@ -48,24 +49,24 @@ export default function VroomDocs() {
                         <main className="flex-1 py-8 xl:px-45 lg:px-25 sm:px-15 px-5 ">
                             {/* Hero Section */}
                             <div className="mb-16">
-                                <h1 className="text-4xl md:text-5xl font-bold mb-4">Vroom Technical Documentation</h1>
+                                <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-[#8b5cf6] bg-clip-text text-transparent">Vroom Technical Documentation</h1>
                                 <p className="text-xl text-gray-600">Architecture, Requirements, and Workflow</p>
                             </div>
 
                             {/* Project Overview */}
                             <section id="overview" className="mb-16 scroll-mt-20">
-                                <h2 className="text-3xl font-bold mb-4">Project Overview</h2>
+                                <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-[#8b5cf6] bg-clip-text text-transparent">Project Overview</h2>
                                 {projectOverview.map((section, idx) => (
                                     <div key={idx} className="mt-6 text-lg">
                                         <p className="text-lg font-semibold">{section.heading}:</p>
-                                        <span className="text-gray-700 leading-relaxed">{section.content}</span>
+                                        <span className="text-muted leading-relaxed">{section.content}</span>
                                     </div>
                                 ))}
                             </section>
 
                             {/* Requirements */}
                             <section id="requirements" className="mb-16 scroll-mt-20">
-                                <h2 className="text-3xl font-bold mb-6">Requirements</h2>
+                                <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-[#8b5cf6] bg-clip-text text-transparent">Requirements</h2>
                                 <div className="space-y-4">
                                     {[
                                         "Landing page with project intro, create room, join room options.",
@@ -88,7 +89,7 @@ export default function VroomDocs() {
 
                             {/* Specifications */}
                             <section id="specifications" className="mb-16">
-                                <h2 className="text-3xl font-bold mb-6">Specifications</h2>
+                                <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-[#8b5cf6] bg-clip-text text-transparent">Specifications</h2>
                                 <div className="grid md:grid-cols-2 gap-4">
                                     {[
                                         { icon: Lock, title: "No Personal Info", desc: "Complete anonymity for all users" },
@@ -111,7 +112,7 @@ export default function VroomDocs() {
 
                             {/* Tech Stack */}
                             <section id="tech-stack" className="mb-16">
-                                <h2 className="text-3xl font-bold mb-6">Tech Stack</h2>
+                                <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-[#8b5cf6] bg-clip-text text-transparent">Tech Stack</h2>
                                 <div className="space-4 grid md:grid-cols-2 gap-5">
                                     {[
                                         { name: "Next.js", desc: "Frontend & backend", color: "bg-black" },
@@ -138,7 +139,7 @@ export default function VroomDocs() {
 
                             {/* Workflow Diagram */}
                             <section id="workflow" className="mb-16 ">
-                                <h2 className="text-3xl font-bold mb-6">Workflow Diagram</h2>
+                                <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-[#8b5cf6] bg-clip-text text-transparent">Workflow Diagram</h2>
                                 <div className="mb-6 rounded-lg border-2 border-dashed border-gray-300 p-12 text-center flex justify-center items-center bg-white">
                                     <Image src="/workflow.png" alt="Workflow Diagram" width={1000} height={1000} />
                                 </div>
@@ -165,7 +166,7 @@ export default function VroomDocs() {
 
                             {/* WebSocket Architecture */}
                             <section id="websocket" className="mb-16 text-lg">
-                                <h2 className="text-3xl font-bold mb-6">WebSocket Architecture</h2>
+                                <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-[#8b5cf6] bg-clip-text text-transparent">WebSocket Architecture</h2>
                                 <div className="mb-6 rounded-lg border-2 flex items-center justify-center border-dashed border-gray-300 p-12 text-center bg-white">
                                     <Image src="/socket_connection.jpg" alt="WebSocket Architecture" width={1000} height={1000} />
                                 </div>
@@ -201,7 +202,7 @@ export default function VroomDocs() {
 
                             {/* Message Flow Architecture */}
                             <section id="message-flow" className="mb-16">
-                                <h2 className="text-3xl font-bold mb-6">Message Flow Architecture</h2>
+                                <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-[#8b5cf6] bg-clip-text text-transparent">Message Flow Architecture</h2>
                                 <div className="mb-6 rounded-lg border-2 border-dashed border-gray-300 p-12 text-center bg-white flex justify-center items-center">
                                     <Image src="/message_flow.jpg" alt="Message Flow Architecture" width={1000} height={1000} />
                                 </div>
@@ -237,7 +238,7 @@ export default function VroomDocs() {
 
                             {/* Key Takeaways */}
                             <section id="takeaways" className="mb-16 scroll-mt-120">
-                                <h2 className="text-3xl font-bold mb-6">Key Takeaways</h2>
+                                <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-[#8b5cf6] bg-clip-text text-transparent">Key Takeaways</h2>
                                 <div className="grid gap-4">
                                     {[
                                         {
@@ -266,6 +267,7 @@ export default function VroomDocs() {
                     </div>
                 </div>
             </div>
+            <LandingFooter/>
         </div>
     );
 }

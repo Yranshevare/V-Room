@@ -2,6 +2,7 @@ import React from "react";
 import { Lock, Clock, Shield, Link2, Zap } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import LandingHeader from "@/components/LandingHeader";
+import LandingFooter from "@/components/LandingFooter";
 
 const howItWorks = [
     {
@@ -127,6 +128,8 @@ export default function VroomLanding() {
                     </div>
                 </section>
             </div>
+
+            <LandingFooter/>
         </div>
     );
 }

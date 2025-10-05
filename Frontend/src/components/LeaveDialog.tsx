@@ -9,7 +9,6 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { websocketServerUrl } from "@/constant";
 import axios from "axios";
 import { PhoneOff, Loader2 } from "lucide-react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";

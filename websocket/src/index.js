@@ -54,6 +54,8 @@ io.on("connection", async (socket) => {
                     console.log(`Room ${room} is now empty`);
                     const actualRoomId = await encrypt(room);
                     await client.del(actualRoomId);
+                }else{
+                    const userCount = await client.hLen(room);
                 }
                 io.to(room).emit("UserCount", users.length - 1);
             }
